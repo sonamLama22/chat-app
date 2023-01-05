@@ -1,9 +1,8 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import CountryData from "../../countries.json";
-import { message } from "antd";
-import ShowhidePassword from "../../component/showhidePassword";
+// import { message } from "antd";
+// import ShowhidePassword from "../../component/showhidePassword";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
@@ -17,7 +16,7 @@ const Register = () => {
     };
 
     const response = await fetch(
-      "http://localhost:5000/register",
+      "http://localhost:4000/register",
       requestOptions
     );
     const data = await response.json();
@@ -34,13 +33,14 @@ const Register = () => {
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
-    phoneNumber: Yup.string().required("Required"),
-    permanentAddress: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string()
       .required("Required")
-      .min(6)
-      .matches(passwordRule, { message: "Please create a stronger password" }),
+      .min(6, "Password must be 6 characters long")
+      .matches(passwordRule, "Please create a stronger password"),
+    confirmPassword: Yup.string()
+      .required("Required")
+      .oneOf([Yup.ref("password"), null], "password doesnot match"),
   });
 
   return (
@@ -53,13 +53,8 @@ const Register = () => {
             initialValues={{
               name: "",
               email: "",
-              phoneNumber: "",
-              permanentAddress: "",
-              temporaryAddress: "",
-              userRole: "",
               password: "",
-              country: "",
-              zipCode: "",
+              confirmPassword: "",
             }}
             validationSchema={SignupSchema}
             onSubmit={(values) => {
@@ -77,7 +72,7 @@ const Register = () => {
               <Form onSubmit={handleSubmit}>
                 <Field
                   name="name"
-                  placeholder="Your Name"
+                  placeholder="Enter your name"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -88,7 +83,7 @@ const Register = () => {
 
                 <Field
                   name="email"
-                  placeholder="Your Email"
+                  placeholder="Enter your email"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -98,106 +93,29 @@ const Register = () => {
                 ) : null}
 
                 <Field
-                  name="phoneNumber"
-                  placeholder="Your phoneNumber"
-                  value={values.phoneNumber}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.phoneNumber && touched.phoneNumber ? (
-                  <div className="error">{errors.phoneNumber}</div>
-                ) : null}
-
-                <Field
-                  name="permanentAddress"
-                  placeholder="Your permanentAddress"
-                  value={values.permanentAddress}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.permanentAddress && touched.permanentAddress ? (
-                  <div className="error">{errors.permanentAddress}</div>
-                ) : null}
-
-                <Field
-                  name="temporaryAddress"
-                  placeholder="Your temporaryAddress"
-                  value={values.temporaryAddress}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.temporaryAddress && touched.temporaryAddress ? (
-                  <div className="error">{errors.temporaryAddress}</div>
-                ) : null}
-
-                <select
-                  name="userRole"
-                  value={values.userRole}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                >
-                  <option
-                    value=""
-                    disabled="disabled"
-                    label="Select a Role"
-                  ></option>
-                  <option value="user" label="User">
-                    User
-                  </option>
-                  <option value="rider" label="Rider">
-                    Rider
-                  </option>
-                </select>
-                {errors.userRole && touched.userRole ? (
-                  <div className="error">{errors.userRole}</div>
-                ) : null}
-
-                <Field
+                  type="password"
                   name="password"
-                  placeholder="Your password"
+                  placeholder="Enter your password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  component={ShowhidePassword}
+                  // component={ShowhidePassword}
                 />
                 {errors.password && touched.password ? (
                   <div className="error">{errors.password}</div>
                 ) : null}
 
-                <select
-                  name="country"
-                  value={values.country}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                >
-                  <option
-                    value=""
-                    disabled="disabled"
-                    label="Select a Country"
-                  ></option>
-                  {CountryData.map((country) => {
-                    const { name } = country;
-                    return (
-                      <option value={name} label={name} key={name}>
-                        {name}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                {errors.country && touched.country ? (
-                  <div className="error">{errors.country}</div>
-                ) : null}
-
                 <Field
-                  name="zipCode"
-                  placeholder="Your zipCode"
-                  value={values.zipCode}
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm password"
+                  value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  // component={ShowhidePassword}
                 />
-                {errors.zipCode && touched.zipCode ? (
-                  <div className="error">{errors.zipCode}</div>
+                {errors.confirmPassword && touched.confirmPassword ? (
+                  <div className="error">{errors.confirmPassword} </div>
                 ) : null}
 
                 <button type="submit">Signup</button>
