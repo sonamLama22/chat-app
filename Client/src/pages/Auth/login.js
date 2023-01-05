@@ -3,7 +3,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { message } from "antd";
 import { useNavigate, Link } from "react-router-dom";
-import ShowhidePassword from "../../component/showhidePassword";
+// import ShowhidePassword from "../../component/showhidePassword";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
       body: JSON.stringify(values),
     };
 
-    const response = await fetch("http://localhost:5000/login", requestOptions);
+    const response = await fetch("http://localhost:4000/login", requestOptions);
     const data = await response.json();
 
     if (data.msg === "login success") {
@@ -63,10 +63,11 @@ const Login = () => {
                 ) : null}
 
                 <Field
+                  type="password"
                   name="password"
                   placeholder="Enter Password"
                   value={values.password}
-                  component={ShowhidePassword}
+                  // component={ShowhidePassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
