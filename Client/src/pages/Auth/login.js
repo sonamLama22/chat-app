@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { message } from "antd";
 import { useNavigate, Link } from "react-router-dom";
-// import ShowhidePassword from "../../component/showhidePassword";
+import Button from "@material-ui/core/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const loginUser = async (values, resetForm) => {
     const requestOptions = {
@@ -29,7 +32,7 @@ const Login = () => {
     <section>
       <div className="container">
         <div className="form">
-          <h1>Login</h1>
+          <h1>Welcome back</h1>
 
           <Formik
             initialValues={{
@@ -62,20 +65,31 @@ const Login = () => {
                   <div className="error">{errors.email}</div>
                 ) : null}
 
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="Enter Password"
-                  value={values.password}
-                  // component={ShowhidePassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+                <div className="input_wrap">
+                  <i onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </i>
+
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  ></Field>
+                </div>
                 {errors.password && touched.password ? (
                   <div className="error">{errors.password}</div>
                 ) : null}
 
-                <button type="submit">Login</button>
+                <Button color="primary" variant="contained" type="submit">
+                  Log In
+                </Button>
               </Form>
             )}
           </Formik>
