@@ -42,27 +42,18 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <!-- USAGE EXAMPLES -->
 
-## **Features**
+### **Features**
 
-- :white_check_mark: Users
-  - :white_check_mark: Sign Up
-  - :white_check_mark: Login
+ :white_check_mark: Users
+   :white_check_mark: Sign Up
+   :white_check_mark: Login
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 <!-- ## **Todo**
 -  -->
 
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### **Setup**
 
-_For more examples, please refer to the [Documentation](https://example.com)_ -->
-
-<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
-<!-- ROADMAP -->
-
-<!-- ## **Contact**
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+Clone this repo to your desktop and run `npm install` to install all the dependencies.
+Once the dependencies are installed, you can run `npm start` to start the application.
