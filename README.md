@@ -3,7 +3,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-A simple react chat application.
+A simple chat application built with MERN stack.
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
