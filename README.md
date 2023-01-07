@@ -44,9 +44,9 @@ _Below is an example of how you can instruct your audience on installing and set
 
 ### **Features**
 
- :white_check_mark: Users
-   :white_check_mark: Sign Up
-   :white_check_mark: Login
+ - :white_check_mark: Users
+   - :white_check_mark: Sign Up
+   - :white_check_mark: Login
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
