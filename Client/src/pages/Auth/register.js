@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-// import { message } from "antd";
 // import ShowhidePassword from "../../component/showhidePassword";
 import { useNavigate, Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const registerUser = async (values) => {
@@ -47,7 +50,7 @@ const Register = () => {
     <section className="form_section">
       <div className="container">
         <div className="form">
-          <h1>Sign Up</h1>
+          <h1>Create an account</h1>
 
           <Formik
             initialValues={{
@@ -92,33 +95,52 @@ const Register = () => {
                   <div className="error">{errors.email}</div>
                 ) : null}
 
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // component={ShowhidePassword}
-                />
+                <div className="input_wrap">
+                  <i onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </i>
+
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  ></Field>
+                </div>
                 {errors.password && touched.password ? (
                   <div className="error">{errors.password}</div>
                 ) : null}
 
-                <Field
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // component={ShowhidePassword}
-                />
+                <div className="input_wrap">
+                  <i onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </i>
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </div>
                 {errors.confirmPassword && touched.confirmPassword ? (
                   <div className="error">{errors.confirmPassword} </div>
                 ) : null}
 
-                <button type="submit">Signup</button>
+                <Button color="primary" variant="contained" type="submit">
+                  Sign Up
+                </Button>
               </Form>
             )}
           </Formik>
