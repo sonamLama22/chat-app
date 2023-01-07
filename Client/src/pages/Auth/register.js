@@ -95,15 +95,6 @@ const Register = () => {
                   <div className="error">{errors.email}</div>
                 ) : null}
 
-                {/* <Field
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // component={ShowhidePassword}
-                /> */}
                 <div className="input_wrap">
                   <i onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? (
@@ -141,7 +132,6 @@ const Register = () => {
                     value={values.confirmPassword}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    // component={ShowhidePassword}
                   />
                 </div>
                 {errors.confirmPassword && touched.confirmPassword ? (
