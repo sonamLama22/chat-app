@@ -3,7 +3,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { message } from "antd";
 import { useNavigate, Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,7 +21,8 @@ const Login = () => {
     const data = await response.json();
 
     if (data.msg === "login success") {
-      alert("login success");
+      // alert("login success");
+      navigate("/chat");
     }
   };
   const SignupSchema = Yup.object().shape({
@@ -87,7 +88,16 @@ const Login = () => {
                   <div className="error">{errors.password}</div>
                 ) : null}
 
-                <Button color="primary" variant="contained" type="submit">
+                <p>
+                  <Link to="/ForgotPassword">Forgot your password?</Link>
+                </p>
+
+                <Button
+                  sx={{ m: 3 }}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
                   Log In
                 </Button>
               </Form>

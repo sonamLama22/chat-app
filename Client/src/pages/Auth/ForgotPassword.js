@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-// import ShowhidePassword from "../../component/showhidePassword";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const Register = () => {
+const ForgotPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
-  const registerUser = async (values) => {
+  const loginUser = async (values, resetForm) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,49 +17,37 @@ const Register = () => {
     };
 
     const response = await fetch(
-      "http://localhost:4000/register",
+      "http://localhost:4000/resetPassword",
       requestOptions
     );
     const data = await response.json();
 
-    if (data) {
-      //   console.log(data);
-      //   message.success(data.msg);
-      alert(data.msg);
-      navigate("/");
+    if (data.msg === "Password updated") {
+      // alert("login success");
+      navigate("/login");
     }
   };
-
-  const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
   const SignupSchema = Yup.object().shape({
-    name: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-      .required("Required")
-      .min(6, "Password must be 6 characters long")
-      .matches(passwordRule, "Please create a stronger password"),
+    password: Yup.string().required("Required"),
     confirmPassword: Yup.string()
       .required("Required")
       .oneOf([Yup.ref("password"), null], "password doesnot match"),
   });
-
   return (
-    <section className="form_section">
+    <section>
       <div className="container">
         <div className="form">
-          <h1>Create an account</h1>
+          <h1>Reset Password</h1>
 
           <Formik
             initialValues={{
-              name: "",
-              email: "",
               password: "",
               confirmPassword: "",
             }}
             validationSchema={SignupSchema}
-            onSubmit={(values) => {
-              registerUser(values);
+            onSubmit={(values, { resetForm }) => {
+              loginUser(values);
+              resetForm();
             }}
           >
             {({
@@ -73,28 +59,6 @@ const Register = () => {
               handleSubmit,
             }) => (
               <Form onSubmit={handleSubmit}>
-                <Field
-                  name="name"
-                  placeholder="Enter your name"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.name && touched.name ? (
-                  <div className="error">{errors.name}</div>
-                ) : null}
-
-                <Field
-                  name="email"
-                  placeholder="Enter your email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.email && touched.email ? (
-                  <div className="error">{errors.email}</div>
-                ) : null}
-
                 <div className="input_wrap">
                   <i onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? (
@@ -106,7 +70,7 @@ const Register = () => {
 
                   <Field
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Enter new password"
                     name="password"
                     value={values.password}
                     onChange={handleChange}
@@ -144,18 +108,14 @@ const Register = () => {
                   variant="contained"
                   type="submit"
                 >
-                  Sign Up
+                  Submit
                 </Button>
               </Form>
             )}
           </Formik>
-          <p style={{ marginTop: "10px" }}>
-            Already have an account? Please <Link to="/">Login</Link> to
-            continue
-          </p>
         </div>
       </div>
     </section>
   );
 };
-export default Register;
+export default ForgotPassword;
