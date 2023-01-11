@@ -32,15 +32,6 @@ h1 {
   line-height: 34px;
 }
 
-.container {
-  max-width: 100%;
-  width: 450px;
-  margin: 0 auto;
-  height: 400px;
-  background: #bcd4e6;
-  border: 1px solid#6a6b83;
-}
-
 input,
 select {
   height: 40px;

@@ -9,9 +9,10 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const ForgotPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const loginUser = async (values, resetForm) => {
+
+  const resetPassword = async (values, resetForm) => {
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
@@ -46,7 +47,7 @@ const ForgotPassword = () => {
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, { resetForm }) => {
-              loginUser(values);
+              resetPassword(values);
               resetForm();
             }}
           >

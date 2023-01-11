@@ -6,8 +6,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
 
 const Login = () => {
+  // const { name } = useSelector((state) => state.username);
+  // console.log(name);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const loginUser = async (values, resetForm) => {
@@ -23,6 +26,8 @@ const Login = () => {
     if (data.msg === "login success") {
       // alert("login success");
       navigate("/chat");
+    } else {
+      alert("Invalid email or password.");
     }
   };
   const SignupSchema = Yup.object().shape({
@@ -34,7 +39,6 @@ const Login = () => {
       <div className="container">
         <div className="form">
           <h1>Welcome back</h1>
-
           <Formik
             initialValues={{
               email: "",
@@ -62,6 +66,7 @@ const Login = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
+
                 {errors.email && touched.email ? (
                   <div className="error">{errors.email}</div>
                 ) : null}
