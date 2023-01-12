@@ -10,8 +10,9 @@ import "./auth.css";
 import { setUserDetails } from "../../reducers/userSlice";
 
 const Login = () => {
-  // const { name } = useSelector((state) => state.username);
-  // console.log(name);
+  const { name } = useSelector((state) => state.user);
+  console.log(name);
+
   const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +29,6 @@ const Login = () => {
 
     if (data.msg === "login success") {
       // alert("login success");
-
       navigate("/chat");
       dispatch(setUserDetails(data.userDetails));
     } else {
@@ -44,6 +44,7 @@ const Login = () => {
       <div className="container">
         <div className="form">
           <h1 className="welcome">Welcome back</h1>
+          {/* {"you are: " + name} */}
           <Formik
             initialValues={{
               email: "",

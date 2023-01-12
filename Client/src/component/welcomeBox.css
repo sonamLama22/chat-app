@@ -1,0 +1,13 @@
+.welcomeBox {
+  display: flex;
+  flex-direction: column;
+  flex: 75%;
+  background-color: lavender;
+}
+
+.welcome {
+  display: flex;
+  color: royalblue;
+  font-size: 50px;
+  justify-content: space-evenly;
+}

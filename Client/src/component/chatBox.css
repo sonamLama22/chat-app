@@ -3,9 +3,10 @@
   flex-direction: column;
   flex: 75%;
   background-color: lavender;
+
   /* height: 80vh;
   width: 100%; */
-  /* border: 1px solid lightblue;
+  /* 
   overflow-y: scroll;
   background-color: lavender; */
 }
@@ -74,11 +75,13 @@
 .messageInput > form > input {
   flex: 1;
   height: 30px;
-  width: 100%;
+  width: 100px;
   border-radius: 30px;
   border: none;
-  padding: 5px;
+  padding: 7px;
+  color: black;
   background-color: whitesmoke;
+  margin: auto;
 }
 
 .messageInput > form > button {
@@ -87,4 +90,6 @@
   border-radius: 10px;
   border: none;
   width: 60px;
+  height: 35px;
+  margin: auto;
 }

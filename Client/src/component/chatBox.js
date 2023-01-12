@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const ChatBox = ({ selectedUser }) => {
   // const { name } = useSelector((state) => state.username.name);
   // console.log(name);
+
   return (
     <div className="chatbox">
       <div className="chatHeader">
@@ -15,7 +16,11 @@ const ChatBox = ({ selectedUser }) => {
             ) : (
               <p>No chat selected</p>
             )} */}
-            {selectedUser}
+            {selectedUser ? (
+              <p>{selectedUser} </p>
+            ) : (
+              <p>please select a chat </p>
+            )}
           </h3>
         </div>
       </div>
