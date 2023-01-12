@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./sideBar.css";
 import { SearchOutlined } from "@material-ui/icons";
 import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
+import ChatBox from "./chatBox";
 
-const SideBar = ({ userList, selectedChat, setSelectedChat }) => {
+const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
+  // console.log(userList);
+  // console.log(selectedUser);
+
   return (
     <div className="sidebar">
       <div className="header">
-        <Avatar />
-        <h3>{selectedChat} </h3>
+        {/* <Avatar /> */}
+        <h3> contacts </h3>
       </div>
       <div className="search">
         <div className="searchBox">
@@ -17,14 +22,14 @@ const SideBar = ({ userList, selectedChat, setSelectedChat }) => {
         </div>
       </div>
       <div className="users">
-        {userList.map((item, index) => {
+        {userList.map((item) => {
           return (
             <div
               className="list"
-              key={index}
-              onClick={() => setSelectedChat(item.name)}
+              key={item.id}
+              onClick={() => setSelectedUser(item.name)}
             >
-              <h3>{item.name.toUpperCase()} </h3>
+              <h3>{item.name} </h3>
             </div>
           );
         })}

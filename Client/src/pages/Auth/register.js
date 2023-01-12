@@ -50,7 +50,7 @@ const Register = () => {
     <section className="form_section">
       <div className="container">
         <div className="form">
-          <h1>Create an account</h1>
+          <h1 className="welcome">Create an account</h1>
 
           <Formik
             initialValues={{
@@ -74,6 +74,7 @@ const Register = () => {
             }) => (
               <Form onSubmit={handleSubmit}>
                 <Field
+                  className="input-field"
                   name="name"
                   placeholder="Enter your name"
                   value={values.name}
@@ -85,6 +86,7 @@ const Register = () => {
                 ) : null}
 
                 <Field
+                  className="input-field"
                   name="email"
                   placeholder="Enter your email"
                   value={values.email}
@@ -105,6 +107,7 @@ const Register = () => {
                   </i>
 
                   <Field
+                    className="input-field"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     name="password"
@@ -126,6 +129,7 @@ const Register = () => {
                     )}
                   </i>
                   <Field
+                    className="input-field"
                     type={showPassword ? "text" : "password"}
                     name="confirmPassword"
                     placeholder="Confirm password"

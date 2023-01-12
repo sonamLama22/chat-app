@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  currentUser: "",
+  selectedChat: null,
 };
 
 const chatSlice = createSlice({
-  name: "currentUser",
+  name: "chat",
   initialState,
   reducers: {
-    setUserDetails: (state, actions) => {
+    selectChat: (state, actions) => {
       console.log(state);
-      const { name } = actions.payload;
-      state.name = name;
+      state.selectedChat = actions.payload;
     },
-    resetDetails: (state, actions) => {
-      state.name = "";
+    deselectChat: (state) => {
+      state.selectedChat = null;
     },
   },
 });
 
-export const { setUserDetails, resetDetails } = chatSlice.actions;
+export const { selectChat, deselectChat } = chatSlice.actions;
 export default chatSlice.reducer;

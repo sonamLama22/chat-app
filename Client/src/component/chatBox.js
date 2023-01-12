@@ -1,63 +1,33 @@
-// import React, { useEffect } from "react";
-// import { Button, Col, Row, Form } from "react-bootstrap";
-// import "./chatBox.css";
-// import { useSelector, useDispatch } from "react-redux";
-
-// const ChatBox = ({ currentUser }) => {
-//   //   const { name } = useSelector((state) => state.username);
-//   //   const [userData, setUserData] = useState("");
-
-//   useEffect(() => {
-//     const getUserData = async () => {};
-//   });
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//   };
-//   return (
-//     <>
-//       {/* <div className="bar">{currentUser} </div> */}
-//       <div className="message"></div>
-//       <Form onSubmit={handleSubmit}>
-//         <Row>
-//           <Col md={11}>
-//             <Form.Group>
-//               <Form.Control
-//                 type="text"
-//                 placeholder="type your message"
-//               ></Form.Control>
-//             </Form.Group>
-//           </Col>
-//           <Col md={1}>
-//             <Button variant="primary" type="submit">
-//               send
-//             </Button>
-//           </Col>
-//         </Row>
-//       </Form>
-//     </>
-//   );
-// };
-// export default ChatBox;
-import { SettingsInputAntenna } from "@material-ui/icons";
 import React from "react";
 import "./chatBox.css";
+import { useSelector } from "react-redux";
 
-const ChatBox = ({ selectedChat }) => {
-  console.log(selectedChat);
+const ChatBox = ({ selectedUser }) => {
+  // const { name } = useSelector((state) => state.username.name);
+  // console.log(name);
   return (
     <div className="chatbox">
       <div className="chatHeader">
-        <div className="username">{/* <h3> {selectedChat.name} </h3> */}</div>
+        <div className="username">
+          <h3>
+            {/* {selectedChat ? (
+              <p>{selectedChat.name}</p>
+            ) : (
+              <p>No chat selected</p>
+            )} */}
+            {selectedUser}
+          </h3>
+        </div>
       </div>
       <div className="messageBox">
-        <p className="chatMessage">
+        {/* <p className="chatMessage">
           <span className="messageName">sonam</span>
           this is a message
         </p>
         <p className="chatMessage receive">
           <span className="messageName">jane</span>
           this is a message
-        </p>
+        </p> */}
       </div>
       <div className="messageInput">
         <form>
