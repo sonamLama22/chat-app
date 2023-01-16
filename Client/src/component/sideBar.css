@@ -45,7 +45,7 @@
 
 .list {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   border-bottom: 1px solid lightgray;
   cursor: pointer;
   margin: auto;
@@ -53,4 +53,10 @@
 }
 .list:hover {
   background-color: aliceblue;
+}
+
+.avatar {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 30px;
 }

@@ -24,17 +24,25 @@ const Login = () => {
       body: JSON.stringify(values),
     };
 
-    const response = await fetch("http://localhost:4000/login", requestOptions);
-    const data = await response.json();
+    try {
+      const response = await fetch(
+        "http://localhost:4000/login",
+        requestOptions
+      );
+      const data = await response.json();
 
-    if (data.msg === "login success") {
-      // alert("login success");
-      navigate("/chat");
-      dispatch(setUserDetails(data.userDetails));
-    } else {
-      alert("Invalid email or password.");
+      if (data.msg === "login success") {
+        // alert("login success");
+        navigate("/chat");
+        dispatch(setUserDetails(data.userDetails));
+      } else {
+        alert("Invalid email or password.");
+      }
+    } catch (err) {
+      console.error(JSON.stringify(err));
     }
   };
+
   const SignupSchema = Yup.object().shape({
     password: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),

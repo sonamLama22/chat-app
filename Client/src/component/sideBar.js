@@ -4,6 +4,7 @@ import { SearchOutlined } from "@material-ui/icons";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
 import ChatBox from "./chatBox";
+import { ListItemAvatar } from "@mui/material";
 
 const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
   // console.log(userList);
@@ -22,17 +23,23 @@ const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
         </div>
       </div>
       <div className="users">
-        {userList.map((item) => {
-          return (
-            <div
-              className="list"
-              key={item.id}
-              onClick={() => setSelectedUser(item.name)}
-            >
-              <h3>{item.name} </h3>
-            </div>
-          );
-        })}
+        {userList.length > 0
+          ? userList.map((item) => {
+              return (
+                <div
+                  className="list"
+                  key={item.name}
+                  onClick={() => setSelectedUser(item.name)}
+                >
+                  <ListItemAvatar className="avatar">
+                    <Avatar>{item.name[0].toUpperCase()}</Avatar>
+                  </ListItemAvatar>
+
+                  <h3> {item.name} </h3>
+                </div>
+              );
+            })
+          : "list not found."}
       </div>
     </div>
   );

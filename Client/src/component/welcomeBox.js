@@ -1,13 +1,9 @@
 import React from "react";
 import "./welcomeBox.css";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../reducers/userSlice";
+import { useSelector } from "react-redux";
 
 const WelcomeBox = () => {
   const { name } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  //   dispatch(setUserDetails(data.userDetails));
 
   return (
     <div className="welcomeBox">
