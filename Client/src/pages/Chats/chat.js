@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import "./chat.css";
 import { useSelector } from "react-redux";
 
-const Chat = () => {
+const Chat = ({ socket }) => {
   // const selectedChat = useSelector((state) => state.chat.selectedChat);
   // console.log(selectedChat);
 
@@ -36,7 +36,7 @@ const Chat = () => {
           setSelectedUser={setSelectedUser}
         />
         {selectedUser ? (
-          <ChatBox selectedUser={selectedUser} />
+          <ChatBox selectedUser={selectedUser} socket={socket} />
         ) : (
           <WelcomeBox />
         )}
