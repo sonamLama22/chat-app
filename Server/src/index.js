@@ -19,8 +19,12 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log(`A user connected ${socket.id}`);
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
+
+  //listens to the event called "send_message" from Client and returns some data.
+  //a callback function that receives data
+  socket.on("send_message", (data) => {
+    // console.log(data);
+    socket.broadcast.emit("receiveMessage", data); //sends message to all the users except the one that has logged in. This event is listened in the Client side.
   });
 });
 
