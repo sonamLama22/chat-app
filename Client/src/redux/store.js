@@ -8,7 +8,6 @@ import { persistReducer, persistStore } from "redux-persist";
 
 const reducer = combineReducers({
   chat: chatSlice,
-  // user: persistReducer(userPersistConfig, userSlice),
   user: userSlice,
 });
 

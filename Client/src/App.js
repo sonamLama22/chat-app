@@ -6,6 +6,9 @@ import Chat from "./pages/Chats/chat";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 // import "bootstrap/dist/css/bootstrap.min.css";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:4000");
 
 const App = () => {
   return (
@@ -13,7 +16,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/chat" element={<Chat />} />
+        <Route exact path="/chat" element={<Chat socket={socket} />} />
         <Route exact path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
     </Router>

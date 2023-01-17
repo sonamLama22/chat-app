@@ -5,9 +5,13 @@
   background-color: lavender;
 }
 
-.welcome {
+.welcome-msg {
   display: flex;
-  color: royalblue;
-  font-size: 50px;
-  justify-content: space-evenly;
+  color: rgb(75, 54, 96);
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+}
+.welcome-msg h1 {
+  font-size: 3rem;
 }

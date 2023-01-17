@@ -1,10 +1,15 @@
 import React from "react";
 import "./chatBox.css";
 import { useSelector } from "react-redux";
+import "../App.js";
 
-const ChatBox = ({ selectedUser }) => {
+const ChatBox = ({ selectedUser, socket }) => {
   // const { name } = useSelector((state) => state.username.name);
   // console.log(name);
+
+  const sendMessage = () => {
+    // socket.emit()
+  };
 
   return (
     <div className="chatbox">
@@ -42,7 +47,9 @@ const ChatBox = ({ selectedUser }) => {
             placeholder="Type a message"
             type="text"
           />
-          <button type="submit">send</button>
+          <button onClick={sendMessage} type="submit">
+            send
+          </button>
         </form>
       </div>
     </div>
