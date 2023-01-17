@@ -33,9 +33,9 @@ A simple react chat application.
 - React JS
 - Mongo DB, Express
 - Node JS
-- React Styled Component
 - React Router
 - Redux
+- Redux persist
 - Material Design
 - Ant Design & Material UI
 - Formik & Yup for Form Validation in React
