@@ -20,12 +20,11 @@ app.get("/chat", async (req, res) => {
 
 app.post("/chat", async (req, res) => {
   try {
-    const dbMessage = await Messages.create(req.body);
+    const message = await Messages.create(req.body);
     console.log(req.body);
-    if (dbMessage) {
-      res.json({
-        msg: "new message created",
-      });
+    if (message) {
+      msg: "new message created";
+      res.json(message);
     } else {
       res.json({
         msg: "something went wrong",

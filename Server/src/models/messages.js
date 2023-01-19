@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 const messagesSchema = new Schema(
   {
-    name: { type: String, required: true },
-    message: { type: String, required: true },
+    sender: { type: String },
+    message: { type: String },
   },
   { collection: "messages" }
 );

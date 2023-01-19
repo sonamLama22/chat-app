@@ -40,7 +40,7 @@ const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
                       <Avatar>{item.name[0].toUpperCase()}</Avatar>
                     </ListItemAvatar>
 
-                    <h3> {item.name} </h3>
+                    <h4>{item.name}</h4>
                   </div>
                 );
             })
