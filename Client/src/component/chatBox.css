@@ -74,14 +74,15 @@
 
 .messageInput > form > input {
   flex: 1;
-  height: 30px;
+  height: 20px;
   width: 100px;
   border-radius: 30px;
   border: none;
   padding: 7px;
   color: black;
   background-color: whitesmoke;
-  margin: auto;
+  margin-left: 10px;
+  margin-top: auto;
 }
 
 .messageInput > form > button {
@@ -91,5 +92,8 @@
   border: none;
   width: 60px;
   height: 35px;
-  margin: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
 }
