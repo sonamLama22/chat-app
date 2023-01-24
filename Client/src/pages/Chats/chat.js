@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 const Chat = ({ socket }) => {
   // const selectedChat = useSelector((state) => state.chat.selectedChat);
   // console.log(selectedChat);
+  const { name } = useSelector((state) => state.user);
 
-  const [chat, setChat] = useState(undefined);
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   // console.log(selectedUser);
@@ -18,9 +18,10 @@ const Chat = ({ socket }) => {
   const fetchUsers = async () => {
     const response = await fetch("http://localhost:4000/register");
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     if (data) {
       setUserList(data.usersList);
+      // console.log(data.usersList);
     }
   };
 
@@ -38,12 +39,7 @@ const Chat = ({ socket }) => {
           socket={socket}
         />
         {selectedUser ? (
-          <ChatBox
-            selectedUser={selectedUser}
-            socket={socket}
-            chat={chat}
-            setChat={setChat}
-          />
+          <ChatBox selectedUser={selectedUser} socket={socket} />
         ) : (
           <WelcomeBox />
         )}
