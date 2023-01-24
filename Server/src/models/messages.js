@@ -5,6 +5,7 @@ const messagesSchema = new Schema(
   {
     sender: { type: String },
     message: { type: String },
+    receiver: { type: String },
   },
   { collection: "messages" }
 );

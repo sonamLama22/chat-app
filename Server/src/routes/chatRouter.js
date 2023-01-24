@@ -3,12 +3,12 @@ const Messages = require("../models/messages");
 const app = Router();
 
 app.get("/chat", async (req, res) => {
-  console.log(req.body);
+  //   console.log(req.body);
   try {
-    const message = await Messages.find();
-    if (message) {
+    const chatMessage = await Messages.find();
+    if (chatMessage) {
       res.json({
-        messages: message,
+        messages: chatMessage,
       });
     } else {
       res.status(500).send(err);
