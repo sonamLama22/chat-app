@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./chatBox.css";
 import { useSelector } from "react-redux";
 import "../App.js";
@@ -11,6 +11,7 @@ const ChatBox = ({ selectedUser, socket }) => {
   const [sentMessage, setSentMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [chat, setChat] = useState([]);
+  const scrollRef = useRef(null);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -37,30 +38,41 @@ const ChatBox = ({ selectedUser, socket }) => {
     }
   };
 
-  //listen to the event "receiveMessage" emitted by Server
-  //useEffect is called whenever a message is received.
-  // useEffect(() => {
-  //   socket.on("receive message", (msg) => {
-  //     console.log(`received message: ${msg}`);
-  //     setMessageReceived(msg);
-  //     const newMsg = [...chat, msg];
-  //     setChat(newMsg);
-  //   });
-  // }, [socket, chat]);
-
   const fetchMsg = async () => {
     const response = await fetch("http://localhost:4000/chat");
     const data = await response.json();
     console.log(data);
     if (data) {
       setChat(data.messages);
-      // console.log(data.usersList);
+      // console.log(data.messages);
     }
   };
 
   useEffect(() => {
     fetchMsg();
   }, []);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({
+      behavior: "auto",
+      block: "end",
+      inline: "nearest",
+    });
+  }, [chat]);
+  //listen to the event "receiveMessage" emitted by Server
+  //useEffect is called whenever a message is received.
+  // useEffect(() => {
+  //   socket.on("receive message", (msg) => {
+  //     console.log(`received message: ${msg}`);
+  //     const newChat = [...chat, msg];
+  //     if (newChat.length > 0) {
+  //       newChat.map((msg) => {
+  //         msg.message = msg;
+  //       });
+  //     }
+  //     setChat(newChat);
+  //   });
+  // }, [socket, chat]);
 
   return (
     <div className="chatbox">
@@ -81,30 +93,33 @@ const ChatBox = ({ selectedUser, socket }) => {
         </div>
       </div>
       <div className="messageBox">
-        {chat.length > 0
-          ? chat.map((msg) => {
-              if (msg.sender === name) {
-                return (
-                  <p className="chatMessage receive" key={msg._id}>
-                    <span className="messageName">You</span>
+        <div ref={scrollRef}>
+          {chat.length > 0
+            ? chat.map((msg) => {
+                if (msg.sender === name) {
+                  return (
+                    <p className="chatMessage receive" key={msg._id}>
+                      <span className="messageName">You</span>
 
-                    {msg.message}
-                  </p>
-                );
-              } else
-                return (
-                  <p className="chatMessage" key={msg._id}>
-                    <span className="messageName">
-                      {selectedUser[0].toUpperCase() +
-                        selectedUser.substring(1)}
-                    </span>
+                      {msg.message}
+                    </p>
+                  );
+                } else
+                  return (
+                    <p className="chatMessage" key={msg._id}>
+                      <span className="messageName">
+                        {selectedUser[0].toUpperCase() +
+                          selectedUser.substring(1)}
+                      </span>
 
-                    {msg.message}
-                  </p>
-                );
-            })
-          : "chat not found."}
+                      {msg.message}
+                    </p>
+                  );
+              })
+            : "chat not found."}
+        </div>
       </div>
+
       {/* <div className="message__status">
         <p>Someone is typing...</p>
       </div> */}
