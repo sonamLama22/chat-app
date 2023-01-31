@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
@@ -10,10 +10,12 @@ import "./auth.css";
 import { setUserDetails } from "../../reducers/userSlice";
 
 const Login = () => {
-  const { name } = useSelector((state) => state.user);
+  const { name, _id } = useSelector((state) => state.user);
   console.log(name);
+  console.log(_id);
 
   const dispatch = useDispatch();
+  const focusRef = useRef(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ const Login = () => {
         requestOptions
       );
       const data = await response.json();
+      console.log(data);
 
       if (data.msg === "login success") {
         // alert("login success");
@@ -43,10 +46,16 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(focusRef.current);
+    focusRef.current.focus();
+  }, []);
+
   const SignupSchema = Yup.object().shape({
     password: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
   });
+
   return (
     <section>
       <div className="container">
@@ -80,6 +89,7 @@ const Login = () => {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  innerRef={focusRef}
                 />
 
                 {errors.email && touched.email ? (

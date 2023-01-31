@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import "../App.js";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import io from "socket.io-client";
 
-const ChatBox = ({ selectedUser, socket }) => {
-  const { name } = useSelector((state) => state.user);
-  // console.log(name);
-  const [sentMessage, setSentMessage] = useState("");
+const socket = io.connect("http://localhost:4000");
+
+const ChatBox = ({ selectedUser }) => {
+  const { name, _id } = useSelector((state) => state.user);
+  console.log(selectedUser._id);
+  const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [chat, setChat] = useState([]);
   const scrollRef = useRef(null);
@@ -20,36 +23,49 @@ const ChatBox = ({ selectedUser, socket }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        sender: name,
-        message: sentMessage,
-        receiver: selectedUser,
+        sender: _id,
+        message: message,
+        receiver: selectedUser._id,
+        members: [_id, selectedUser._id],
       }),
     };
 
     const response = await fetch("http://localhost:4000/chat", requestOptions);
     const data = await response.json();
+    console.log(data);
 
     if (data) {
-      // console.log(data.message);
-      // setChat(data.message);
-      // console.log(chat);
-      socket.emit("send message", data.message);
-      setSentMessage("");
+      socket.emit("send_message", data.message);
+      setMessage("");
     }
   };
 
   const fetchMsg = async () => {
-    const response = await fetch("http://localhost:4000/chat");
-    const data = await response.json();
-    console.log(data);
-    if (data) {
-      setChat(data.messages);
-      // console.log(data.messages);
+    try {
+      const response = await fetch("http://localhost:4000/chat");
+
+      const data = await response.json();
+      // console.log(data);
+      if (data) {
+        setChat(data.messages);
+        // console.log(data.messages);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   useEffect(() => {
     fetchMsg();
+  }, []);
+
+  //listen to the event "receiveMessage" emitted by Server
+  //useEffect is called whenever a message is received.
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      alert(data);
+      setMessageReceived(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -59,20 +75,6 @@ const ChatBox = ({ selectedUser, socket }) => {
       inline: "nearest",
     });
   }, [chat]);
-  //listen to the event "receiveMessage" emitted by Server
-  //useEffect is called whenever a message is received.
-  // useEffect(() => {
-  //   socket.on("receive message", (msg) => {
-  //     console.log(`received message: ${msg}`);
-  //     const newChat = [...chat, msg];
-  //     if (newChat.length > 0) {
-  //       newChat.map((msg) => {
-  //         msg.message = msg;
-  //       });
-  //     }
-  //     setChat(newChat);
-  //   });
-  // }, [socket, chat]);
 
   return (
     <div className="chatbox">
@@ -85,7 +87,7 @@ const ChatBox = ({ selectedUser, socket }) => {
               <p>No chat selected</p>
             )} */}
             {selectedUser ? (
-              <p>{selectedUser} </p>
+              <p>{selectedUser.name} </p>
             ) : (
               <p>please select a chat </p>
             )}
@@ -96,27 +98,24 @@ const ChatBox = ({ selectedUser, socket }) => {
         <div ref={scrollRef}>
           {chat.length > 0
             ? chat.map((msg) => {
-                if (msg.sender === name) {
+                if (msg.sender === _id) {
                   return (
                     <p className="chatMessage receive" key={msg._id}>
-                      <span className="messageName">You</span>
-
+                      <span className="messageName"> </span>
+                      {/* {sentMessage} */}
                       {msg.message}
                     </p>
                   );
                 } else
                   return (
                     <p className="chatMessage" key={msg._id}>
-                      <span className="messageName">
-                        {selectedUser[0].toUpperCase() +
-                          selectedUser.substring(1)}
-                      </span>
-
+                      <span className="messageName">{selectedUser.name}</span>
+                      {/* {messageReceived} */}
                       {msg.message}
                     </p>
                   );
               })
-            : "chat not found."}
+            : null}
         </div>
       </div>
 
@@ -127,8 +126,8 @@ const ChatBox = ({ selectedUser, socket }) => {
       <div className="messageInput">
         <form onSubmit={sendMessage}>
           <input
-            value={sentMessage}
-            onChange={(e) => setSentMessage(e.target.value)}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Type a message"
             type="text"
           />
