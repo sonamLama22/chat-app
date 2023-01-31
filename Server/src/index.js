@@ -19,24 +19,23 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log(`A user connected ${socket.id}`);
-
   //listens to the event called "send_message" from Client and returns some data.
   //a callback function that receives data/payload
-  socket.on("send message", (msg) => {
-    console.log(msg);
-    //send msg to all the connected clients.
-    io.emit("receive message", msg);
-    //   socket.broadcast.emit("receiveMessage", msg); //Upon receiving an event we must respond to that event.
+  socket.on("send_message", (data) => {
+    console.log(data);
+    //send data to all the connected clients.
+    socket.broadcast.emit("receive_message", data); //Upon receiving an event we must respond to that event.
     //returns data back to all the users(client) except the one that has logged in. This event is listened in the Client side.
   });
 });
 
 const registerRouter = require("./routes/registerRouter");
 const loginRouter = require("./routes/loginRouter");
-const chatRouter = require("./routes/chatRouter");
+const messagesRouter = require("./routes/messagesRouter");
+
 app.use(registerRouter);
 app.use(loginRouter);
-app.use(chatRouter);
+app.use(messagesRouter);
 
 httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

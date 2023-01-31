@@ -6,6 +6,7 @@ app.get("/chat", async (req, res) => {
   //   console.log(req.body);
   try {
     const chatMessage = await Messages.find();
+
     if (chatMessage) {
       res.json({
         messages: chatMessage,
