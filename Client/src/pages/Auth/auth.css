@@ -1,7 +1,7 @@
 .container {
   display: flex;
-  background-color: rgba(9, 1, 17, 1);
-  /* background-color: #ffffff; */
+  /* background-color: rgba(9, 1, 17, 1); */
+  background-color: aliceblue;
   place-items: center;
   height: 100vh;
   width: 100vw;
@@ -19,11 +19,11 @@ textarea {
 }
 textarea:focus,
 input:focus {
-  color: #ffffff;
+  color: black;
 }
 .welcome {
   display: flex;
-  color: white;
+  color: rgb(66, 22, 109);
 }
 
 .form {
@@ -38,7 +38,8 @@ input:focus {
   gap: 2rem;
   justify-content: center;
   flex-direction: column;
-  color: rgb(240, 240, 246);
+  /* color: rgb(240, 240, 246); */
+  color: rgb(49, 7, 81);
   /* border-radius: 20px; */
 }
 
@@ -49,7 +50,7 @@ input:focus {
   /* border: none; */
   background-color: transparent;
   /* border-bottom: 3px solid lightgray; */
-  border-color: whitesmoke;
+  border-color: gainsboro;
   border-radius: 15px;
   width: 300px;
   margin-bottom: 20px;

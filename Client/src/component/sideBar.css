@@ -55,6 +55,9 @@
 .list:hover {
   background-color: aliceblue;
 }
+.selected {
+  background-color: aliceblue;
+}
 
 .avatar {
   margin-top: auto;

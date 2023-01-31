@@ -6,21 +6,15 @@ import chatSlice from "../reducers/chatSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
-const reducer = combineReducers({
-  chat: chatSlice,
-  user: userSlice,
-});
-
-const userPersistConfig = {
-  key: "user",
-  storage: storage,
-};
-
 const rootPersistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"],
 };
+
+const reducer = combineReducers({
+  user: userSlice,
+  chat: chatSlice,
+});
 
 const persistedReducer = persistReducer(rootPersistConfig, reducer);
 
