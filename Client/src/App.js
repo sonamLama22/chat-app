@@ -3,6 +3,7 @@ import React from "react";
 import Register from "./pages/Auth/register";
 import Login from "./pages/Auth/login";
 import Chat from "./pages/Chats/chat";
+import Error from "./pages/error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/chat" element={<Chat />} />
         <Route exact path="/forgotPassword" element={<ForgotPassword />} />
+        <Route exact path="*" element={<Error />} />
       </Routes>
     </Router>
   );

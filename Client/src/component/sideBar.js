@@ -4,10 +4,20 @@ import { SearchOutlined } from "@material-ui/icons";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
 import ChatBox from "./chatBox";
+import { ListItemAvatar } from "@mui/material";
+import { useSelector } from "react-redux";
 
-const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
+const SideBar = ({ userList, selectedUser, setSelectedUser, changeChat }) => {
+  const { name, _id } = useSelector((state) => state.user);
   // console.log(userList);
   // console.log(selectedUser);
+  const [selectedChat, setSelectedChat] = useState(undefined);
+  // console.log(selectedChat);
+
+  const changeCurrentChat = (item, index) => {
+    setSelectedChat(index);
+    changeChat(item);
+  };
 
   return (
     <div className="sidebar">
@@ -22,17 +32,28 @@ const SideBar = ({ userList, selectedUser, setSelectedUser }) => {
         </div>
       </div>
       <div className="users">
-        {userList.map((item) => {
-          return (
-            <div
-              className="list"
-              key={item.id}
-              onClick={() => setSelectedUser(item.name)}
-            >
-              <h3>{item.name} </h3>
-            </div>
-          );
-        })}
+        {userList.length > 0
+          ? userList.map((item, index) => {
+              if (item._id === _id) {
+                return null;
+              } else
+                return (
+                  <div
+                    className={`list ${
+                      index === selectedChat ? "selected" : null
+                    }`}
+                    key={item._id}
+                    onClick={() => changeCurrentChat(item, index)}
+                  >
+                    <ListItemAvatar className="avatar">
+                      <Avatar>{item.name[0].toUpperCase()}</Avatar>
+                    </ListItemAvatar>
+
+                    <h4>{item.name}</h4>
+                  </div>
+                );
+            })
+          : "list not found."}
       </div>
     </div>
   );

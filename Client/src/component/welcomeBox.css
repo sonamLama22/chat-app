@@ -1,0 +1,17 @@
+.welcomeBox {
+  display: flex;
+  flex-direction: column;
+  flex: 75%;
+  background-color: lavender;
+}
+
+.welcome-msg {
+  display: flex;
+  color: rgb(75, 54, 96);
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+}
+.welcome-msg h1 {
+  font-size: 3rem;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
@@ -10,9 +10,12 @@ import "./auth.css";
 import { setUserDetails } from "../../reducers/userSlice";
 
 const Login = () => {
-  // const { name } = useSelector((state) => state.username);
-  // console.log(name);
+  const { name, _id } = useSelector((state) => state.user);
+  console.log(name);
+  console.log(_id);
+
   const dispatch = useDispatch();
+  const focusRef = useRef(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -23,27 +26,42 @@ const Login = () => {
       body: JSON.stringify(values),
     };
 
-    const response = await fetch("http://localhost:4000/login", requestOptions);
-    const data = await response.json();
+    try {
+      const response = await fetch(
+        "http://localhost:4000/login",
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data);
 
-    if (data.msg === "login success") {
-      // alert("login success");
-
-      navigate("/chat");
-      dispatch(setUserDetails(data.userDetails));
-    } else {
-      alert("Invalid email or password.");
+      if (data.msg === "login success") {
+        // alert("login success");
+        navigate("/chat");
+        dispatch(setUserDetails(data.userDetails));
+      } else {
+        alert("Invalid email or password.");
+      }
+    } catch (err) {
+      console.error(JSON.stringify(err));
     }
   };
+
+  useEffect(() => {
+    console.log(focusRef.current);
+    focusRef.current.focus();
+  }, []);
+
   const SignupSchema = Yup.object().shape({
     password: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
   });
+
   return (
     <section>
       <div className="container">
         <div className="form">
           <h1 className="welcome">Welcome back</h1>
+          {/* {"you are: " + name} */}
           <Formik
             initialValues={{
               email: "",
@@ -71,6 +89,7 @@ const Login = () => {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  innerRef={focusRef}
                 />
 
                 {errors.email && touched.email ? (

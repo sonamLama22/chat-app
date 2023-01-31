@@ -4,6 +4,21 @@ const app = Router();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+app.get("/register", async (req, res) => {
+  console.log(req);
+  try {
+    const userData = await Users.find();
+    // console.log(userData);
+    if (userData) {
+      res.json({
+        usersList: userData,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -13,7 +28,7 @@ app.post("/register", async (req, res) => {
     if (hash) {
       req.body.password = hash;
       const data = await Users.create(req.body);
-      console.log(req.body);
+      // console.log(req.body);
       if (data) {
         res.json({
           msg: "user registered",
