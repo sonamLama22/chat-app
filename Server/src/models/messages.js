@@ -3,9 +3,16 @@ const { Schema } = mongoose;
 
 const messagesSchema = new Schema(
   {
-    sender: { type: String },
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     message: { type: String },
-    receiver: { type: String },
+    receiver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    members: Array,
   },
   { collection: "messages" }
 );
