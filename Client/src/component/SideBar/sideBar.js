@@ -3,7 +3,7 @@ import "./sideBar.css";
 import { SearchOutlined } from "@material-ui/icons";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
-import ChatBox from "./chatBox";
+import ChatBox from "../ChatBox/chatBox";
 import { ListItemAvatar } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -18,6 +18,8 @@ const SideBar = ({ userList, selectedUser, setSelectedUser, changeChat }) => {
     setSelectedChat(index);
     changeChat(item);
   };
+  // console.log("selected chat" + selectedChat);
+  // console.log(changeChat);
 
   return (
     <div className="sidebar">

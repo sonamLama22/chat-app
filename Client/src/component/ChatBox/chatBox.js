@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./chatBox.css";
 import { useSelector } from "react-redux";
-import "../App.js";
+import "../../App.js";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import io from "socket.io-client";
@@ -10,11 +10,12 @@ const socket = io.connect("http://localhost:4000");
 
 const ChatBox = ({ selectedUser }) => {
   const { name, _id } = useSelector((state) => state.user);
-  console.log(selectedUser._id);
+  console.log("selected userID ->" + selectedUser._id);
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [chat, setChat] = useState([]);
   const scrollRef = useRef(null);
+  const userID = selectedUser._id;
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -32,10 +33,11 @@ const ChatBox = ({ selectedUser }) => {
 
     const response = await fetch("http://localhost:4000/chat", requestOptions);
     const data = await response.json();
-    console.log(data);
+    // console.log("response data: " + data);
 
     if (data) {
-      socket.emit("send_message", data.message);
+      socket.emit("join", userID);
+      console.log("msg: " + data.message);
       setMessage("");
     }
   };
@@ -56,6 +58,10 @@ const ChatBox = ({ selectedUser }) => {
   };
 
   useEffect(() => {
+    socket.emit("connected with", userID);
+  });
+
+  useEffect(() => {
     fetchMsg();
   }, []);
 
@@ -63,8 +69,9 @@ const ChatBox = ({ selectedUser }) => {
   //useEffect is called whenever a message is received.
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      alert(data);
-      setMessageReceived(data);
+      // setChat(data.msg);
+      console.log(data.msg);
+      setMessageReceived(data.msg);
     });
   }, []);
 
