@@ -6,51 +6,96 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:4000");
+// const socket = io.connect(`${process.env.REACT_APP_BASE_URL}`);
 
 const ChatBox = ({ selectedUser }) => {
   const { name, _id } = useSelector((state) => state.user);
-  console.log("selected userID ->" + selectedUser._id);
+  // console.log("selected userID ->" + selectedUser._id);
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [chat, setChat] = useState([]);
   const scrollRef = useRef(null);
   const userID = selectedUser._id;
+  const socket = useRef();
+
+  // useEffect(() => {
+  //   socket.current = io.connect(`${process.env.REACT_APP_BASE_URL}`);
+  // }, []);
+
+  // useEffect(() => {
+  //   socket.current.emit("add-user", _id);
+  //   socket.current.on("get-users", (users) => {
+  //     console.log(users);
+  //   });
+  //   return () => {
+  //     socket.current.disconnect();
+  //   };
+  // }, [name]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sender: _id,
         message: message,
-        receiver: selectedUser._id,
-        members: [_id, selectedUser._id],
+        members: [_id, userID],
       }),
     };
 
-    const response = await fetch("http://localhost:4000/chat", requestOptions);
-    const data = await response.json();
-    // console.log("response data: " + data);
+    // socket.current.emit("send message", {
+    //   senderId: _id,
+    //   receiverId: userID,
+    //   msg: message,
+    // });
 
-    if (data) {
-      socket.emit("join", userID);
-      console.log("msg: " + data.message);
-      setMessage("");
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/chat-messages`,
+        requestOptions
+      );
+      const data = await response.json();
+      // console.log("response data: " + data);
+      if (data) {
+        const msg = data.message;
+        const backup = [...chat];
+        backup.push({
+          sender: _id,
+          message: msg,
+          members: [_id, userID],
+        });
+        setChat(backup);
+        setMessage("");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
+  // useEffect(() => {
+  //   socket.current.on("receive message", (data) => {
+  //     setMessageReceived({
+  //       sender: data.senderId,
+  //       message: data.msg,
+  //     });
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   messageReceived &&
+  //     selectedUser &&
+  //     setChat((prev) => [...prev, messageReceived]);
+  // }, [messageReceived, selectedUser]);
+
   const fetchMsg = async () => {
     try {
-      const response = await fetch("http://localhost:4000/chat");
-
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/chat-messages/${userID}/${_id}`
+      );
       const data = await response.json();
-      // console.log(data);
       if (data) {
         setChat(data.messages);
-        // console.log(data.messages);
       }
     } catch (err) {
       console.log(err);
@@ -58,22 +103,8 @@ const ChatBox = ({ selectedUser }) => {
   };
 
   useEffect(() => {
-    socket.emit("connected with", userID);
-  });
-
-  useEffect(() => {
     fetchMsg();
-  }, []);
-
-  //listen to the event "receiveMessage" emitted by Server
-  //useEffect is called whenever a message is received.
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      // setChat(data.msg);
-      console.log(data.msg);
-      setMessageReceived(data.msg);
-    });
-  }, []);
+  }, [selectedUser]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({
@@ -88,11 +119,6 @@ const ChatBox = ({ selectedUser }) => {
       <div className="chatHeader">
         <div className="username">
           <h3>
-            {/* {selectedChat ? (
-              <p>{selectedChat.name}</p>
-            ) : (
-              <p>No chat selected</p>
-            )} */}
             {selectedUser ? (
               <p>{selectedUser.name} </p>
             ) : (
@@ -104,10 +130,10 @@ const ChatBox = ({ selectedUser }) => {
       <div className="messageBox">
         <div ref={scrollRef}>
           {chat.length > 0
-            ? chat.map((msg) => {
+            ? chat.map((msg, index) => {
                 if (msg.sender === _id) {
                   return (
-                    <p className="chatMessage receive" key={msg._id}>
+                    <p className="chatMessage receive" key={index}>
                       <span className="messageName"> </span>
                       {/* {sentMessage} */}
                       {msg.message}
@@ -115,7 +141,7 @@ const ChatBox = ({ selectedUser }) => {
                   );
                 } else
                   return (
-                    <p className="chatMessage" key={msg._id}>
+                    <p className="chatMessage" key={index}>
                       <span className="messageName">{selectedUser.name}</span>
                       {/* {messageReceived} */}
                       {msg.message}
@@ -125,11 +151,6 @@ const ChatBox = ({ selectedUser }) => {
             : null}
         </div>
       </div>
-
-      {/* <div className="message__status">
-        <p>Someone is typing...</p>
-      </div> */}
-
       <div className="messageInput">
         <form onSubmit={sendMessage}>
           <input
@@ -138,7 +159,6 @@ const ChatBox = ({ selectedUser }) => {
             placeholder="Type a message"
             type="text"
           />
-          {/* <button type="submit">send</button> */}
           <Button type="submit" variant="contained" endIcon={<SendIcon />}>
             Send
           </Button>

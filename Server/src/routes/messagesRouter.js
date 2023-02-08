@@ -2,11 +2,11 @@ const { Router } = require("express");
 const Messages = require("../models/messages");
 const app = Router();
 
-app.get("/chat", async (req, res) => {
-  //   console.log(req.body);
+app.get("/chat-messages/:firstid/:secondid", async (req, res) => {
   try {
-    const chatMessage = await Messages.find();
-
+    const chatMessage = await Messages.find({
+      members: { $all: [req.params.firstid, req.params.secondid] },
+    });
     if (chatMessage) {
       res.json({
         messages: chatMessage,
@@ -19,10 +19,10 @@ app.get("/chat", async (req, res) => {
   }
 });
 
-app.post("/chat", async (req, res) => {
+app.post("/chat-messages", async (req, res) => {
   try {
     const message = await Messages.create(req.body);
-    console.log(req.body);
+    // console.log(req.body);
     if (message) {
       msg: "new message created";
       res.json(message);

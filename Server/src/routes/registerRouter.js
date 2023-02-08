@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 app.get("/register", async (req, res) => {
-  console.log(req);
+  // console.log(req);
   try {
     const userData = await Users.find();
     // console.log(userData);

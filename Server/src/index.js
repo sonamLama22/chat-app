@@ -17,17 +17,59 @@ const io = new Server(httpServer, {
   },
 });
 
-io.on("connection", (socket) => {
-  console.log(`A user connected ${socket.id}`);
-  //listens to the event called "send_message" from Client and returns some data.
-  //a callback function that receives data/payload
-  socket.on("send_message", (data) => {
-    console.log(data);
-    //send data to all the connected clients.
-    socket.broadcast.emit("receive_message", data); //Upon receiving an event we must respond to that event.
-    //returns data back to all the users(client) except the one that has logged in. This event is listened in the Client side.
-  });
-});
+// let users = [];
+// const addUser = (userId, socketId) => {
+//   !users.some((user) => user.userId === userId) &&
+//     users.push({ userId, socketId });
+// };
+
+// const removeUser = (socketId) => {
+//   users = users.filter((user) => user.socketId !== socketId);
+// };
+
+// const getUser = (userId) => {
+//   return users.find((user) => user.userId === userId);
+// };
+
+// io.on("connection", (socket) => {
+//   console.log(`A user connected ${socket.id}`);
+//   //after every connection take userID and socketID from user
+//   socket.on("add-user", (userId) => {
+//     addUser(userId, socket.id);
+//     io.emit("get-users", users);
+//   });
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//     removeUser(socket.id);
+//     io.emit("get-users", users);
+//   });
+
+//   socket.on("send message", ({ senderId, receiverId, msg }) => {
+//     const user = getUser(receiverId);
+//     io.to(user.socketId).emit("receive message", {
+//       senderId,
+//       msg,
+//     });
+//   });
+// });
+// global.onlineUsers = new Map();
+// io.on("connection", (socket) => {
+//   console.log(`A user connected ${socket.id}`);
+//   global.chatSocket = socket;
+//   socket.on("add user", (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//   });
+
+//   socket.on("send message", (data) => {
+//     const userSocket = onlineUsers.get(data.to);
+//     if (userSocket) {
+//       socket.to(userSocket).emit("receive message", data.msg);
+//     }
+//   });
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+// });
 
 const registerRouter = require("./routes/registerRouter");
 const loginRouter = require("./routes/loginRouter");

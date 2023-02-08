@@ -1,5 +1,3 @@
-import { autocompleteClasses } from "@mui/material";
-
 const Error = () => {
   const styles = {
     color: "red",

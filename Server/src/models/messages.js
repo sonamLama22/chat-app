@@ -3,17 +3,11 @@ const { Schema } = mongoose;
 
 const messagesSchema = new Schema(
   {
-    sender: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    sender: { type: String },
     message: { type: String },
-    receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
     members: Array,
   },
+  { timestamps: true },
   { collection: "messages" }
 );
 

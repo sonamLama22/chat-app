@@ -5,7 +5,7 @@ import WelcomeBox from "../../component/WelcomeBox/welcomeBox";
 import { useState, useEffect } from "react";
 import "./chat.css";
 import { useSelector } from "react-redux";
-import NavBar from "../../component/navBar";
+import NavBar from "../../component/Navbar/navBar";
 
 const Chat = () => {
   const { name } = useSelector((state) => state.user);
@@ -15,11 +15,11 @@ const Chat = () => {
   const handleChatChange = (chat) => {
     setSelectedUser(chat);
   };
-  console.log("selected" + selectedUser);
+
   const fetchUsers = async () => {
-    const response = await fetch("http://localhost:4000/register");
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/register`);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
 
     if (data) {
       setUserList(data.usersList);
@@ -32,7 +32,7 @@ const Chat = () => {
 
   return (
     <div className="chat">
-      <div className="navbar">
+      <div>
         <NavBar />
       </div>
       <div className="chat-body">
