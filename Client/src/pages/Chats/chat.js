@@ -19,7 +19,7 @@ const Chat = () => {
   const fetchUsers = async () => {
     const response = await fetch(`${process.env.REACT_APP_BASE_URL}/register`);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     if (data) {
       setUserList(data.usersList);

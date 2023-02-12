@@ -25,18 +25,16 @@ const Login = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/login`,
         requestOptions
       );
       const data = await response.json();
-      console.log(data);
-
-      if (data.msg === "login success") {
-        // alert("login success");
+      if (response.status === 200) {
+        alert("login success");
         navigate("/chat");
+        data.userDetails.token = data.token;
         dispatch(setUserDetails(data.userDetails));
       } else {
         alert("Invalid email or password.");

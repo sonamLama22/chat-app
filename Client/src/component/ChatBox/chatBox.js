@@ -6,10 +6,17 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import io from "socket.io-client";
 
-// const socket = io.connect(`${process.env.REACT_APP_BASE_URL}`);
+const socket = io(`${process.env.REACT_APP_BASE_URL}`);
+socket.on("connection", () => {
+  console.log(socket.id + " has connected.");
+});
+
+socket.on("disconnect", () => {
+  console.log(socket.id + " has disconnected"); // undefined
+});
 
 const ChatBox = ({ selectedUser }) => {
-  const { name, _id } = useSelector((state) => state.user);
+  const { name, _id, token } = useSelector((state) => state.user);
   // console.log("selected userID ->" + selectedUser._id);
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
@@ -18,25 +25,28 @@ const ChatBox = ({ selectedUser }) => {
   const userID = selectedUser._id;
   const socket = useRef();
 
-  // useEffect(() => {
-  //   socket.current = io.connect(`${process.env.REACT_APP_BASE_URL}`);
-  // }, []);
+  useEffect(() => {
+    socket.current = io.connect(`${process.env.REACT_APP_BASE_URL}`);
+  }, []);
 
-  // useEffect(() => {
-  //   socket.current.emit("add-user", _id);
-  //   socket.current.on("get-users", (users) => {
-  //     console.log(users);
-  //   });
-  //   return () => {
-  //     socket.current.disconnect();
-  //   };
-  // }, [name]);
+  useEffect(() => {
+    socket.current.emit("add user", _id);
+    socket.current.on("get users", (users) => {
+      console.log(users);
+    });
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [name]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         sender: _id,
         message: message,
@@ -44,11 +54,11 @@ const ChatBox = ({ selectedUser }) => {
       }),
     };
 
-    // socket.current.emit("send message", {
-    //   senderId: _id,
-    //   receiverId: userID,
-    //   msg: message,
-    // });
+    socket.current.emit("send message", {
+      senderId: _id,
+      receiverId: userID,
+      msg: message,
+    });
 
     try {
       const response = await fetch(
@@ -73,27 +83,33 @@ const ChatBox = ({ selectedUser }) => {
     }
   };
 
-  // useEffect(() => {
-  //   socket.current.on("receive message", (data) => {
-  //     setMessageReceived({
-  //       sender: data.senderId,
-  //       message: data.msg,
-  //     });
-  //   });
-  // }, []);
+  useEffect(() => {
+    socket.current.on("receive message", (data) => {
+      setMessageReceived({
+        sender: data.senderId,
+        message: data.msg,
+      });
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   messageReceived &&
-  //     selectedUser &&
-  //     setChat((prev) => [...prev, messageReceived]);
-  // }, [messageReceived, selectedUser]);
+  useEffect(() => {
+    messageReceived &&
+      selectedUser &&
+      setChat((prev) => [...prev, messageReceived]);
+  }, [messageReceived, selectedUser]);
 
   const fetchMsg = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/chat-messages/${userID}/${_id}`
+        `${process.env.REACT_APP_BASE_URL}/chat-messages/${userID}/${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = await response.json();
+      console.log(data);
       if (data) {
         setChat(data.messages);
       }
@@ -135,7 +151,6 @@ const ChatBox = ({ selectedUser }) => {
                   return (
                     <p className="chatMessage receive" key={index}>
                       <span className="messageName"> </span>
-                      {/* {sentMessage} */}
                       {msg.message}
                     </p>
                   );
@@ -143,7 +158,6 @@ const ChatBox = ({ selectedUser }) => {
                   return (
                     <p className="chatMessage" key={index}>
                       <span className="messageName">{selectedUser.name}</span>
-                      {/* {messageReceived} */}
                       {msg.message}
                     </p>
                   );

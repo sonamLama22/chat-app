@@ -6,7 +6,6 @@ import Chat from "./pages/Chats/chat";
 import Error from "./pages/error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
