@@ -7,12 +7,13 @@ import SendIcon from "@mui/icons-material/Send";
 import io from "socket.io-client";
 
 const socket = io(`${process.env.REACT_APP_BASE_URL}`);
-socket.on("connection", () => {
-  console.log(socket.id + " has connected.");
+
+socket.on("connect", () => {
+  console.log(socket.connnected);
 });
 
 socket.on("disconnect", () => {
-  console.log(socket.id + " has disconnected"); // undefined
+  console.log(socket.connected); // undefined
 });
 
 const ChatBox = ({ selectedUser }) => {
