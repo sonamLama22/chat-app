@@ -37,12 +37,8 @@
   background-position: center;
   background-repeat: repeat;
   overflow: scroll;
-<<<<<<< HEAD:Client/src/component/ChatBox/chatBox.css
   overflow-x: auto;
   overflow-y: auto;
-=======
-  overflow-x: hidden;
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/chatBox.css
   padding: 20px;
 }
 
@@ -51,13 +47,8 @@
   font-size: 17px;
   padding: 10px;
   width: fit-content;
-<<<<<<< HEAD:Client/src/component/ChatBox/chatBox.css
   background-color: gainsboro;
   border-radius: 20px;
-=======
-  background-color: aliceblue;
-  border-radius: 10px;
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/chatBox.css
 }
 
 .messageName {
@@ -69,12 +60,8 @@
 
 .receive {
   margin-left: auto;
-<<<<<<< HEAD:Client/src/component/ChatBox/chatBox.css
   color: white;
   background-color: rgb(91, 91, 236);
-=======
-  background-color: burlywood;
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/chatBox.css
 }
 .messageInput {
   display: flex;
@@ -96,11 +83,7 @@
   border: none;
   padding: 7px;
   color: black;
-<<<<<<< HEAD:Client/src/component/ChatBox/chatBox.css
   background-color: rgb(238, 238, 249);
-=======
-  background-color: whitesmoke;
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/chatBox.css
   margin-left: 10px;
   margin-top: auto;
 }
@@ -110,13 +93,8 @@
   color: white;
   border-radius: 25px;
   border: none;
-<<<<<<< HEAD:Client/src/component/ChatBox/chatBox.css
   width: 10px;
   height: 30px;
-=======
-  width: 80px;
-  height: 35px;
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/chatBox.css
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 10px;

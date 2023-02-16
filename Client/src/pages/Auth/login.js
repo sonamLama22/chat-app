@@ -31,15 +31,8 @@ const Login = () => {
         requestOptions
       );
       const data = await response.json();
-<<<<<<< HEAD
       if (response.status === 200) {
         alert("login success");
-=======
-      console.log(data);
-
-      if (data.msg === "login success") {
-        // alert("login success");
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
         navigate("/chat");
         data.userDetails.token = data.token;
         dispatch(setUserDetails(data.userDetails));
@@ -52,11 +45,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     // console.log(focusRef.current);
-=======
-    console.log(focusRef.current);
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
     focusRef.current.focus();
   }, []);
 
