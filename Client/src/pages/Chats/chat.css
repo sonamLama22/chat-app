@@ -1,18 +1,33 @@
 .chat {
+<<<<<<< HEAD
   /* display: grid;
   place-items: center; */
   /* height: 100vh;
   background-color: rgba(242, 240, 245, 0.5); */
+=======
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: rgba(242, 240, 245, 0.5);
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
 }
 
 .chat-body {
   display: flex;
+<<<<<<< HEAD
   height: 95vh;
   width: 100vw;
   margin-bottom: 0;
   /* border: 10px solid lavender; */
   /* border-radius: 25px; */
   /* box-shadow: 1px 2px 20px -5px black; */
+=======
+  height: 90vh;
+  width: 90vw;
+  border: 10px solid lavender;
+  border-radius: 25px;
+  box-shadow: 1px 2px 20px -5px black;
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
 }
 
 .side {

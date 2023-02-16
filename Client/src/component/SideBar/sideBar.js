@@ -18,8 +18,11 @@ const SideBar = ({ userList, selectedUser, setSelectedUser, changeChat }) => {
     setSelectedChat(index);
     changeChat(item);
   };
+<<<<<<< HEAD:Client/src/component/SideBar/sideBar.js
   // console.log("selected chat" + selectedChat);
   // console.log(changeChat);
+=======
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4:Client/src/component/sideBar.js
 
   return (
     <div className="sidebar">

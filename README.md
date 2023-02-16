@@ -1,6 +1,6 @@
 ## **About The Project**
 
-A simple react chat application.
+A simple chat application built with MERN stack.
 
 ### **Tech Stacks**
 

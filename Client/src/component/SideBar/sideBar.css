@@ -59,6 +59,9 @@
 .selected {
   background-color: rgb(202, 199, 237);
 }
+.selected {
+  background-color: aliceblue;
+}
 
 .avatar {
   margin-top: auto;

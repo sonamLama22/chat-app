@@ -11,8 +11,14 @@ const Chat = () => {
   const { name } = useSelector((state) => state.user);
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+<<<<<<< HEAD
 
   const handleChatChange = (chat) => {
+=======
+  // console.log(selectedUser);
+  const handleChatChange = (chat) => {
+    console.log(chat);
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
     setSelectedUser(chat);
   };
 

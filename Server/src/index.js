@@ -41,6 +41,7 @@ const removeUser = (socketId) => {
 
 //run when a user connects
 io.on("connection", (socket) => {
+<<<<<<< HEAD
   console.log(socket.id + " user connected");
   socket.on("add user", (userId) => {
     addUser(userId, socket.id);
@@ -64,6 +65,16 @@ io.on("connection", (socket) => {
     removeUser(socket.id);
     io.emit("get users", connectedUsers);
     socket.disconnect();
+=======
+  console.log(`A user connected ${socket.id}`);
+  //listens to the event called "send_message" from Client and returns some data.
+  //a callback function that receives data/payload
+  socket.on("send_message", (data) => {
+    console.log(data);
+    //send data to all the connected clients.
+    socket.broadcast.emit("receive_message", data); //Upon receiving an event we must respond to that event.
+    //returns data back to all the users(client) except the one that has logged in. This event is listened in the Client side.
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
   });
 });
 
