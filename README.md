@@ -18,18 +18,14 @@ A simple chat application built with MERN stack.
 
 ### **Features**
 
-- :white_check_mark: Users
-  - :white_check_mark: Sign Up
-  - :white_check_mark: Login
-  - :white_check_mark: One-on-One chat
-  - :white_large_square: Search user
-  
+:white_check_mark: Sign Up
+:white_check_mark: Login
+:white_check_mark: One-on-One chat
+:white_large_square: Search user
+
 ### **Demo**
 
-
 https://user-images.githubusercontent.com/74273235/219238171-603e1931-dbe6-4d96-af29-3961d55f0d60.mp4
-
-
 
 ### **Setup**
 
