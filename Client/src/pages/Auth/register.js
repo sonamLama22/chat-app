@@ -19,7 +19,7 @@ const Register = () => {
     };
 
     const response = await fetch(
-      "http://localhost:4000/register",
+      `${process.env.REACT_APP_BASE_URL}/register`,
       requestOptions
     );
     const data = await response.json();

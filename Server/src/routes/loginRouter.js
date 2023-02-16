@@ -3,28 +3,31 @@ const Users = require("../models/users");
 const app = Router();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+var jwt = require("jsonwebtoken");
 
 app.post("/login", async (req, res) => {
   try {
-    // console.log("body is: ", req.body);
+    var token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY);
     const data = await Users.findOne({ email: req.body.email });
-    // console.log("data is: ", data);
     if (data) {
       const dbPassword = data.password;
-      // console.log(data.password);
-
       const isValidPassword = bcrypt.compareSync(req.body.password, dbPassword);
+<<<<<<< HEAD
+      const { password, __v, ...refactoredData } = data.toObject();
+      // refactoredData.token = token;
+=======
       // console.log(isValidPassword);
       const { password, __v, ...refactoredData } = data.toObject(); //takes everything except password and __v and stores them in new obj called refactoredData.
       console.log(refactoredData);
+>>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
       if (isValidPassword) {
-        res.json({
-          // userdata: data,
+        res.status(200).json({
           msg: "login success",
           userDetails: refactoredData,
+          token: token,
         });
       } else {
-        res.json({
+        res.status(500).json({
           msg: "Password did not match",
         });
       }
@@ -48,8 +51,6 @@ app.put("/resetPassword", async (req, res) => {
     if (isValidPassword && req.body.newPassword) {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(req.body.newPassword, salt);
-      // Store hash in your password DB.
-      // console.log(hash);
       if (hash) {
         data.password = hash;
         const response = await Users.findByIdAndUpdate(data._id, data);
