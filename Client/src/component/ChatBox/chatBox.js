@@ -166,6 +166,7 @@ const ChatBox = ({ selectedUser }) => {
             : null}
         </div>
       </div>
+
       <div className="messageInput">
         <form onSubmit={sendMessage}>
           <input
@@ -174,9 +175,11 @@ const ChatBox = ({ selectedUser }) => {
             placeholder="Type a message"
             type="text"
           />
-          <Button type="submit" variant="contained" endIcon={<SendIcon />}>
-            Send
-          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            endIcon={<SendIcon />}
+          ></Button>
         </form>
       </div>
     </div>
