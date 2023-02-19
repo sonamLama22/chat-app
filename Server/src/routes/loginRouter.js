@@ -12,14 +12,8 @@ app.post("/login", async (req, res) => {
     if (data) {
       const dbPassword = data.password;
       const isValidPassword = bcrypt.compareSync(req.body.password, dbPassword);
-<<<<<<< HEAD
       const { password, __v, ...refactoredData } = data.toObject();
       // refactoredData.token = token;
-=======
-      // console.log(isValidPassword);
-      const { password, __v, ...refactoredData } = data.toObject(); //takes everything except password and __v and stores them in new obj called refactoredData.
-      console.log(refactoredData);
->>>>>>> dfe384377f91554e705a0af4fdedf37c219628e4
       if (isValidPassword) {
         res.status(200).json({
           msg: "login success",
