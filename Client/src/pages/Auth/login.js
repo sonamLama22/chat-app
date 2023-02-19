@@ -120,9 +120,9 @@ const Login = () => {
                   <div className="error">{errors.password}</div>
                 ) : null}
 
-                <p>
+                {/* <p>
                   <Link to="/ForgotPassword">Forgot your password?</Link>
-                </p>
+                </p> */}
 
                 <Button
                   sx={{ m: 3 }}
